@@ -1,0 +1,26 @@
+{
+  "name": "task-tracker-cli",
+  "version": "1.0.0",
+  "description": "Task tracker cli project implementation from roadmap backend projects.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backend",
+    "typescript",
+    "nodejs",
+    "roadmap",
+    "task-list",
+    "cli-tool"
+  ],
+  "author": "Rahul Dey",
+  "github": "https://github.com/Rahul8320/Task-Tracker-Cli",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
