@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "backend",
@@ -20,6 +20,8 @@
   "github": "https://github.com/Rahul8320/Task-Tracker-Cli",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "jest": "^29.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }
