@@ -1,8 +1,8 @@
 import fs from "fs";
-import { Task } from "../../src/models/task.model";
+import { Task } from "../models/task.model";
 import { randomUUID } from "crypto";
 import { TaskStatus } from "../../src/enums/TaskStatus";
-import { loadTasks } from "../../src/features/loadTasks";
+import { loadTasks, listTasks } from "../../src/features/listTasks";
 
 jest.mock("fs");
 
@@ -64,5 +64,54 @@ describe("Load Tasks", () => {
 
     expect(fs.readFileSync).toHaveBeenCalledTimes(1);
     expect(fs.readFileSync).toHaveReturnedWith("[]");
+  });
+});
+
+describe("List Tasks", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should list all tasks", () => {
+    const existingTasks: Task[] = [
+      {
+        id: "1",
+        description: "First Task",
+        status: TaskStatus.DONE,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toLocaleString(),
+      },
+      {
+        id: "2",
+        description: "Second Task",
+        status: TaskStatus.TODO,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toLocaleString(),
+      },
+    ];
+
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue(
+      JSON.stringify(existingTasks)
+    );
+
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+
+    listTasks();
+
+    expect(consoleSpy).toHaveBeenCalledWith("Your tasks:");
+    expect(consoleSpy).toHaveBeenCalledWith("1. First Task [✅]");
+    expect(consoleSpy).toHaveBeenCalledWith("2. Second Task [⌛]");
+  });
+
+  it("should print a message when no tasks exist", () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (fs.readFileSync as jest.Mock).mockReturnValue("[]");
+
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+
+    listTasks();
+
+    expect(consoleSpy).toHaveBeenCalledWith("No tasks found.");
   });
 });
